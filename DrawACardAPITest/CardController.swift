@@ -14,10 +14,21 @@ class CardController {
     
     //next study the functions and the type of data the API can help you with. Become familiar with everything needed to perform the request.
     func draw(numberOfCards: Int, completion: @escaping ([Card]) -> Void) {
-        
+        //now you need to find out the appending paths and compnents that allow you to access a property or action grom the API
         let newDeckURL = baseURL.appendingPathComponent("new")
         let drawURL = newDeckURL.appendingPathComponent("draw")
-        
+        //urlcomponents and appending path components figure out what's needed to make the link or address work with the information your addingto the link. So it formats the url into the proper structure for you.
+        var urlComponents =  URLComponents(url: drawURL, resolvingAgainstBaseURL: true)
+    
         let countQueryItem = URLQueryItem(name: "count", value: "\(numberOfCards)")
+        
+        urlComponents?.queryItems = [countQueryItem]
+        
+        guard let requestURL = urlComponents?.url else { return }
+        
+        //now we need to create a urlSession that will return us some data
+       
+        URLSession.shared.dataTask(with: requestURL, completionHandler: <#T##(Data?, URLResponse?, Error?) -> Void#>)
+        
     }
 }
