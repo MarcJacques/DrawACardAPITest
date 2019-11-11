@@ -28,7 +28,16 @@ class CardController {
         
         //now we need to create a urlSession that will return us some data
        
-        URLSession.shared.dataTask(with: requestURL, completionHandler: <#T##(Data?, URLResponse?, Error?) -> Void#>)
+        URLSession.shared.dataTask(with: requestURL) { (data, _, error) in
+            //code in this closure only starts after connecting to the api.
+            //We need to Get the data and turn it into an array of Cards
+            
+            if let error = error {
+                NSLog("Error with data task: \(error)")
+                completion(nil)
+            }
+            
+        }.resume() // Starts the data task. Without this the data task would never go to the API.
         
     }
 }
